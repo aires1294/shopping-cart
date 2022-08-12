@@ -10,15 +10,19 @@ describe('1 - Teste a função fetchProducts', () => {
   });
   test('Chamar a função fetchProducts com computador como argumento', async () => {
     const fetchComputer = await fetchProducts('computador');
-    expect(fetchComputer).toBeCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador');
+    expect(fetch).toBeCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   });
   test('', async () => {
     const fetchComputer = await fetchProducts('computador');
     expect(fetchComputer).toEqual(computadorSearch);    
   });
   test('', async () => {
-    const fetchComputer = await fetchProducts();
-    expect(fetchComputer).toEqual(new Error('You must provide an url'));
+    try {
+      const fetchComputer = await fetchProducts();
+    } catch (error) {
+      expect(error).toEqual(new Error('You must provide an url'));
+    } 
+    
   });
  
 });
