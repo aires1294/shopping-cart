@@ -45,9 +45,10 @@ const getFetch = async () => {
   console.log(results);
   results.forEach(({ id, title, thumbnail }) => {
   const item = createProductItemElement({ sku: id, name: title, image: thumbnail });
-  itemHtml.appendChild(item); 
-     
+  itemHtml.appendChild(item);      
   });
 };
 
-window.onload = () => { getFetch()};
+window.onload = async () => { 
+  await getFetch(); 
+};
