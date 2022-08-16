@@ -1,3 +1,4 @@
+const itensGuardados = document.querySelector('.cart__items');
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -38,17 +39,26 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const getFetch = async () => {
+const montandoProduto = async () => {
   const itemHtml = document.querySelector('.items');
   const pegandoFetch = await fetchProducts('computador');
   const { results } = pegandoFetch;
-  console.log(results);
+  // console.log(results);
   results.forEach(({ id, title, thumbnail }) => {
   const item = createProductItemElement({ sku: id, name: title, image: thumbnail });
   itemHtml.appendChild(item);      
   });
 };
 
+const montandoCarrinho = async (id) => {
+  const itemCarrinho = await fetchItem(id);
+  const additemCarrinho = createCartItemElement({ sku: itemCarrinho.id, name: itemCarrinho.title, salePrice: itemCarrinho.price });
+  itensGuardados.appendChild(additemCarrinho);
+  console.log(itemCarrinho);
+  console.log(itensGuardados);
+};
+
 window.onload = async () => { 
-  await getFetch(); 
+  await montandoProduto(); 
+  await montandoCarrinho('MLB1615760527');
 };
