@@ -14,13 +14,3 @@ if (typeof module !== 'undefined') {
     fetchItem,
   };
 }
-
-// const fetchItem = () => {
-//   // seu código aqui
-// };
-
-// if (typeof module !== 'undefined') {
-//   module.exports = {
-//     fetchItem,
-//   };
-// }
