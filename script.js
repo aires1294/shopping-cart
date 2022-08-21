@@ -15,7 +15,7 @@ const createCustomElement = (element, className, innerText) => {
 };
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  event.target.remove();
 };
 
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
@@ -61,6 +61,20 @@ const montandoProduto = async () => {
   });
 };
 
+const emptyCart = () => {
+  const removeOl = document.querySelector('.cart__items');
+  const filhosLi = removeOl.querySelectorAll('.cart__item');
+  // console.log(filhosLi);
+  for (let index = 0; index < filhosLi.length; index += 1) {
+    filhosLi[index].remove();
+  }
+};
+
+const button = () => {
+  const recuperaButton = document.querySelector('.empty-cart');
+  recuperaButton.addEventListener('click', emptyCart);
+};
+
 // const montandoCarrinho = async (id) => {
 //   const itemCarrinho = await fetchItem(id);
 //   const additemCarrinho = createCartItemElement({ sku: itemCarrinho.id, name: itemCarrinho.title, salePrice: itemCarrinho.price });
@@ -71,4 +85,5 @@ const montandoProduto = async () => {
 
 window.onload = async () => { 
   await montandoProduto(); 
+  button();
 };
