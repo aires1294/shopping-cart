@@ -1,4 +1,6 @@
 const itensGuardados = document.querySelector('.cart__items');
+// const itens = document.querySelector('.items');
+const itemHtml = document.querySelector('.items');
 
 let localStorageEquipamentos = [];
 
@@ -55,7 +57,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const montandoProduto = async () => {
-  const itemHtml = document.querySelector('.items');
+  // const itemHtml = document.querySelector('.items');
   const pegandoFetch = await fetchProducts('computador');
   const { results } = pegandoFetch;
   // console.log(results);
@@ -86,20 +88,20 @@ const carregaPagina = (equipamentos) => {
   });
 };
 
-// const loading = async () => {
-//   const itens = document.querySelector('.items');
-//   const element = document.createElement('p');
-//   element.innerText = 'carregando...';
-//   element.className = 'loading';  
-//   itens.appendChild(element);
-//   await montandoProduto();
-//   itemHtml.firstChild.remove();
-// };
+const loading = async () => {
+  // console.log(itens);
+  const element = document.createElement('p');
+  element.innerText = 'carregando...';
+  element.className = 'loading';  
+  itemHtml.appendChild(element);
+  await montandoProduto();
+  itemHtml.firstChild.remove();
+};
 
 window.onload = async () => { 
-  await montandoProduto(); 
+  // await montandoProduto(); 
   // QUANDO EU COLOCO ELA ON, o botao de esvaziar para de funcionar e a pagina n carrega com o carrinho
-  // await loading(); 
+  loading(); 
   button();
   localStorageEquipamentos = JSON.parse(getSavedCartItems('cartItems')) || [];
   carregaPagina(localStorageEquipamentos);
