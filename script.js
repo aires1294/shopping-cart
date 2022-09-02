@@ -1,5 +1,7 @@
 const itensGuardados = document.querySelector('.cart__items');
 
+let localStorageEquipamentos = [];
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -31,6 +33,8 @@ const addProductCart = async (event) => {
   const itemCarrinho = await fetchItem(idProduct);
   const additemCarrinho = createCartItemElement(itemCarrinho);
   itensGuardados.appendChild(additemCarrinho);
+  localStorageEquipamentos.push(itemCarrinho);
+  saveCartItems(JSON.stringify(localStorageEquipamentos));
   // console.log(idProduct);  
 };
 
@@ -75,15 +79,28 @@ const button = () => {
   recuperaButton.addEventListener('click', emptyCart);
 };
 
-// const montandoCarrinho = async (id) => {
-//   const itemCarrinho = await fetchItem(id);
-//   const additemCarrinho = createCartItemElement({ sku: itemCarrinho.id, name: itemCarrinho.title, salePrice: itemCarrinho.price });
-//   itensGuardados.appendChild(additemCarrinho);
-//   console.log(itemCarrinho);
-//   console.log(itensGuardados);
+const carregaPagina = (equipamentos) => {
+  equipamentos.forEach((equipamento) => {
+      const equipamentosCarrega = createCartItemElement(equipamento);
+      itensGuardados.appendChild(equipamentosCarrega);
+  });
+};
+
+// const loading = async () => {
+//   const itens = document.querySelector('.items');
+//   const element = document.createElement('p');
+//   element.innerText = 'carregando...';
+//   element.className = 'loading';  
+//   itens.appendChild(element);
+//   await montandoProduto();
+//   itemHtml.firstChild.remove();
 // };
 
 window.onload = async () => { 
   await montandoProduto(); 
+  // QUANDO EU COLOCO ELA ON, o botao de esvaziar para de funcionar e a pagina n carrega com o carrinho
+  // await loading(); 
   button();
+  localStorageEquipamentos = JSON.parse(getSavedCartItems('cartItems')) || [];
+  carregaPagina(localStorageEquipamentos);
 };
